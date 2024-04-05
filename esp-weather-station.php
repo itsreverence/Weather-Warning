@@ -48,6 +48,16 @@
         <link rel="stylesheet" type="text/css" href="esp-style.css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                setInterval(function() {
+                    $("#tableBody").load("getReadings.php?readingsCount=<?php echo $readings_count; ?>");
+                }, 5000);
+            });
+        </script>
+
+
+
     </head>
     <header class="header">
         <h1>📊 ESP Weather Station</h1>
@@ -78,7 +88,7 @@
                 <tr>
                     <td><?php echo $min_temp['min_amount']; ?> &deg;C</td>
                     <td><?php echo $max_temp['max_amount']; ?> &deg;C</td>
-                    <td><?php echo round((float)$avg_temp['avg_amount'], 2); ?> &deg;C</td>
+                    <td><?php echo round($avg_temp['avg_amount'], 2); ?> &deg;C</td>
                 </tr>
             </table>
         </div>
@@ -101,49 +111,40 @@
                 <tr>
                     <td><?php echo $min_humi['min_amount']; ?> %</td>
                     <td><?php echo $max_humi['max_amount']; ?> %</td>
-                    <td><?php echo round((float)$avg_humi['avg_amount'], 2); ?> %</td>
+                    <td><?php echo round($avg_humi['avg_amount'], 2); ?> %</td>
                 </tr>
             </table>
         </div>
     </section>
 <?php
-    echo   '<h2> View Latest ' . $readings_count . ' Readings</h2>
-            <table cellspacing="5" cellpadding="5" id="tableReadings">
-                <tr>
-                    <th>ID</th>
-                    <th>Sensor</th>
-                    <th>Location</th>
-                    <th>Value 1</th>
-                    <th>Value 2</th>
-                    <th>Timestamp</th>
-                </tr>';
+    echo '<h2>View Latest ' . $readings_count . ' Readings</h2>
+    <table cellspacing="5" cellpadding="5" id="tableReadings">
+        <tr>
+            <th>ID</th>
+            <th>Sensor</th>
+            <th>Location</th>
+            <th>Value 1</th>
+            <th>Value 2</th>
+            <th>Timestamp</th>
+        </tr>
+        <tbody id="tableBody">';
 
     $result = getAllReadings($readings_count);
-        if ($result) {
+    if ($result) {
         while ($row = $result->fetch_assoc()) {
-            $row_id = $row["id"];
-            $row_sensor = $row["sensor"];
-            $row_location = $row["location"];
-            $row_value1 = $row["value1"];
-            $row_value2 = $row["value2"];
-            $row_reading_time = $row["reading_time"];
-            // Uncomment to set timezone to - 1 hour (you can change 1 to any number)
-            //$row_reading_time = date("Y-m-d H:i:s", strtotime("$row_reading_time - 1 hours"));
-            // Uncomment to set timezone to + 7 hours (you can change 7 to any number)
-            //$row_reading_time = date("Y-m-d H:i:s", strtotime("$row_reading_time + 7 hours"));
-
             echo '<tr>
-                    <td>' . $row_id . '</td>
-                    <td>' . $row_sensor . '</td>
-                    <td>' . $row_location . '</td>
-                    <td>' . $row_value1 . '</td>
-                    <td>' . $row_value2 . '</td>
-                    <td>' . $row_reading_time . '</td>
-                  </tr>';
+            <td>' . $row["id"] . '</td>
+            <td>' . $row["sensor"] . '</td>
+            <td>' . $row["location"] . '</td>
+            <td>' . $row["value1"] . '</td>
+            <td>' . $row["value2"] . '</td>
+            <td>' . $row["reading_time"] . '</td>
+            </tr>';
         }
-        echo '</table>';
         $result->free();
     }
+
+    echo '</tbody></table>';
 ?>
 
 <script>

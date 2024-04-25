@@ -1,13 +1,3 @@
-<!--
-  Rui Santos
-  Complete project details at https://RandomNerdTutorials.com/cloud-weather-station-esp32-esp8266/
-
-  Permission is hereby granted, free of charge, to any person obtaining a copy
-  of this software and associated documentation files.
-
-  The above copyright notice and this permission notice shall be included in all
-  copies or substantial portions of the Software.
--->
 <?php
     include_once('esp-database.php');
     if (isset($_GET["readingsCount"])){
@@ -48,15 +38,7 @@
         <link rel="stylesheet" type="text/css" href="esp-style.css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script>
-            $(document).ready(function() {
-                setInterval(function() {
-                    $("#tableBody").load("getReadings.php?readingsCount=<?php echo $readings_count; ?>");
-                }, 5000);
-            });
-        </script>
-
-
+        
 
     </head>
     <header class="header">
@@ -66,7 +48,7 @@
             <input type="submit" value="UPDATE">
         </form>
     </header>
-<body>
+<body background="#F5EEE6">
     <p>Last reading: <?php echo $last_reading_time; ?></p>
     <section class="content">
 	    <div class="box gauge--1">
@@ -86,9 +68,9 @@
                     <td>Average</td>
                 </tr>
                 <tr>
-                    <td><?php echo $min_temp['min_amount']; ?> &deg;C</td>
-                    <td><?php echo $max_temp['max_amount']; ?> &deg;C</td>
-                    <td><?php echo round($avg_temp['avg_amount'], 2); ?> &deg;C</td>
+                    <td id="min_temp">--</td>
+                    <td id="max_temp">--</td>
+                    <td id="avg_temp">--</td>
                 </tr>
             </table>
         </div>
@@ -109,9 +91,9 @@
                     <td>Average</td>
                 </tr>
                 <tr>
-                    <td><?php echo $min_humi['min_amount']; ?> %</td>
-                    <td><?php echo $max_humi['max_amount']; ?> %</td>
-                    <td><?php echo round($avg_humi['avg_amount'], 2); ?> %</td>
+                    <td id="min_humi">--</td>
+                    <td id="max_humi">--</td>
+                    <td id="avg_humi">--</td>
                 </tr>
             </table>
         </div>
@@ -148,40 +130,61 @@
 ?>
 
 <script>
-    var value1 = <?php echo $last_reading_temp; ?>;
-    var value2 = <?php echo $last_reading_humi; ?>;
-    setTemperature(value1);
-    setHumidity(value2);
-
-    function setTemperature(curVal){
-    	//set range for Temperature in Celsius -5 Celsius to 38 Celsius
-    	var minTemp = -5.0;
-    	var maxTemp = 38.0;
-        //set range for Temperature in Fahrenheit 23 Fahrenheit to 100 Fahrenheit
-    	//var minTemp = 23;
-    	//var maxTemp = 100;
-
-    	var newVal = scaleValue(curVal, [minTemp, maxTemp], [0, 180]);
-    	$('.gauge--1 .semi-circle--mask').attr({
-    		style: '-webkit-transform: rotate(' + newVal + 'deg);' +
-    		'-moz-transform: rotate(' + newVal + 'deg);' +
-    		'transform: rotate(' + newVal + 'deg);'
-    	});
-    	$("#temp").text(curVal + ' ºC');
+    function getAllReadings() {
+        $("#tableBody").load("getReadings.php?readingsCount=<?php echo $readings_count; ?>");
     }
 
-    function setHumidity(curVal){
-    	//set range for Humidity percentage 0 % to 100 %
-    	var minHumi = 0;
-    	var maxHumi = 100;
+    function updateLastReadings() {
+        $.ajax({
+            url: "getLastReadings.php",
+            dataType: "json",
+            success: function(data) {
+                console.log("Received data:", data); // Debugging line
 
-    	var newVal = scaleValue(curVal, [minHumi, maxHumi], [0, 180]);
-    	$('.gauge--2 .semi-circle--mask').attr({
-    		style: '-webkit-transform: rotate(' + newVal + 'deg);' +
-    		'-moz-transform: rotate(' + newVal + 'deg);' +
-    		'transform: rotate(' + newVal + 'deg);'
-    	});
-    	$("#humi").text(curVal + ' %');
+                if (data.error) {
+                    console.error("Error fetching last readings:", data.error);
+                } else {
+                    var temp = data.temperature;
+                    var humi = data.humidity;
+
+                    console.log("Temperature:", temp); // Debugging line
+                    console.log("Humidity:", humi); // Debugging line
+
+                    setTemperature(temp);
+                    setHumidity(humi);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log("AJAX request error:", error);
+                console.log("Response:", xhr.responseText);
+            }
+        });
+    }
+
+    function setTemperature(curVal) {
+        var minTemp = -5.0;
+        var maxTemp = 38.0;
+
+        var newVal = scaleValue(curVal, [minTemp, maxTemp], [0, 180]);
+        $('.gauge--1 .semi-circle--mask').attr({
+            style: '-webkit-transform: rotate(' + newVal + 'deg);' +
+                '-moz-transform: rotate(' + newVal + 'deg);' +
+                'transform: rotate(' + newVal + 'deg);'
+        });
+        $("#temp").text(curVal + ' ºC');
+    }
+
+    function setHumidity(curVal) {
+        var minHumi = 0;
+        var maxHumi = 100;
+
+        var newVal = scaleValue(curVal, [minHumi, maxHumi], [0, 180]);
+        $('.gauge--2 .semi-circle--mask').attr({
+            style: '-webkit-transform: rotate(' + newVal + 'deg);' +
+                '-moz-transform: rotate(' + newVal + 'deg);' +
+                'transform: rotate(' + newVal + 'deg);'
+        });
+        $("#humi").text(curVal + ' %');
     }
 
     function scaleValue(value, from, to) {
@@ -189,6 +192,33 @@
         var capped = Math.min(from[1], Math.max(from[0], value)) - from[0];
         return ~~(capped * scale + to[0]);
     }
+
+    function updateReadingsStats() {
+        $.ajax({
+            url: "getReadingsStats.php?readingsCount=<?php echo $readings_count; ?>",
+            dataType: "json",
+            success: function(data) {
+                $("#min_temp").text(data.temperature.min + " °C");
+                $("#max_temp").text(data.temperature.max + " °C");
+                $("#avg_temp").text(data.temperature.avg + " °C");
+                $("#min_humi").text(data.humidity.min + " %");
+                $("#max_humi").text(data.humidity.max + " %");
+                $("#avg_humi").text(data.humidity.avg + " %");
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX request error:", error);
+            }
+        });
+    }
+
+    $(document).ready(function() {
+        getAllReadings();
+        updateLastReadings();
+        updateReadingsStats();
+        setInterval(getAllReadings, 5000);
+        setInterval(updateLastReadings, 5000);
+        setInterval(updateReadingsStats, 5000);
+    });
 </script>
 </body>
 </html>

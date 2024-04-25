@@ -3,28 +3,21 @@
 #include <DHTesp.h>
 #include <IPAddress.h>
 
-const char* ssid = SECRET_SSID;
-const char* password = SECRET_PASSWORD;
+String lastOctet = "111" // last octet of local ip address of device hosting site
+const char* ssid = SECRET_SSID; // name of network to connect ESP to
+const char* password = SECRET_PASSWORD; // password of network to connect ESP to
 
-//Your Domain name with URL path or IP address with path
-String serverName;
+String serverName; // url where the data will get posted at
 
-// Keep this API Key value to be compatible with the PHP code provided in the project page.
-// If you change the apiKeyValue value, the PHP file /esp-post-data.php also needs to have the same key
-String apiKeyValue = "mF8d0cge2";
-String sensorName = "DHT11";
-String sensorLocation = "Classroom";
+String apiKeyValue = "mF8d0cge2"; // database api key for validation
+String sensorName = "DHT11"; // sensor name to display
+String sensorLocation = "Classroom"; // location of station to display
 
-DHTesp dht;
-int dhtPin = 13;
+DHTesp dht; // sensor object
+int dhtPin = 13; // sensor pin
 
-// the following variables are unsigned longs because the time, measured in
-// milliseconds, will quickly become a bigger number than can be stored in an int.
-unsigned long lastTime = 0;
-// Timer set to 10 minutes (600000)
-//unsigned long timerDelay = 600000;
-// Set timer to 30 seconds (30000)
-unsigned long timerDelay = 30000;
+unsigned long lastTime = 0; // flag for last time data was sent
+unsigned long timerDelay = 30000; // delay between sending of data
 
 void setup() {
   Serial.begin(115200);
@@ -39,21 +32,21 @@ void setup() {
   Serial.print("Connected to WiFi network with IP Address: ");
   Serial.println(WiFi.localIP());
   
-  String prefixString = "http://192.168.";
+  String prefixString = "http://";
+  uint8_t firstOctet = WiFi.localIP()[0];
+  uint8_t secondOctet = WiFi.localIP()[1];
   uint8_t thirdOctet = WiFi.localIP()[2];
-  String suffixString = ".111/esp-post-data.php";
-  String completeUrl = prefixString + String(thirdOctet) + suffixString;
+  String suffixString = "/esp-post-data.php";
+  String completeUrl = prefixString  + String(firstOctet) + "." + String(secondOctet) + "." + String(thirdOctet) + "." + fourthOctet + suffixString;
   serverName = completeUrl;
 
-  Serial.println("Timer set to 30 seconds (timerDelay variable), it will take 30 seconds before publishing the first reading.");
+  Serial.println("Timer set to " + String(timerDelay / 1000) + " seconds (timerDelay variable), it will take 30 seconds before publishing the first reading.");
 
   dht.setup(dhtPin, DHTesp::DHT11);
 }
 
 void loop() {
-  //Send an HTTP POST request every 10 minutes
   if ((millis() - lastTime) > timerDelay) {
-    //Check WiFi connection status
     if (WiFi.status() == WL_CONNECTED) {
       WiFiClient client;
       HTTPClient http;
@@ -64,13 +57,10 @@ flag:
         goto flag;
       }
 
-      // Your Domain name with URL path or IP address with path
       http.begin(client, serverName);
 
-      // Specify content-type header
       http.addHeader("Content-Type", "application/x-www-form-urlencoded");
 
-      // Prepare your HTTP POST request data
       newValues.temperature = newValues.temperature * 9/5 + 32;
       String httpRequestData = "api_key=" + apiKeyValue + "&sensor=" + sensorName
                                + "&location=" + sensorLocation + "&value1=" + newValues.temperature
@@ -78,20 +68,7 @@ flag:
       Serial.print("httpRequestData: ");
       Serial.println(httpRequestData);
 
-      // You can comment the httpRequestData variable above
-      // then, use the httpRequestData variable below (for testing purposes without the BME280 sensor)
-      //String httpRequestData = "api_key=tPmAT5Ab3j7F9&sensor=BME280&location=Office&value1=24.75&value2=49.54&value3=1005.14";
-
-      // Send HTTP POST request
       int httpResponseCode = http.POST(httpRequestData);
-
-      // If you need an HTTP request with a content type: text/plain
-      //http.addHeader("Content-Type", "text/plain");
-      //int httpResponseCode = http.POST("Hello, World!");
-
-      // If you need an HTTP request with a content type: application/json, use the following:
-      //http.addHeader("Content-Type", "application/json");
-      //int httpResponseCode = http.POST("{\"value1\":\"19\",\"value2\":\"67\",\"value3\":\"78\"}");
 
       if (httpResponseCode > 0) {
         Serial.print("HTTP Response code: ");
@@ -100,7 +77,6 @@ flag:
         Serial.print("Error code: ");
         Serial.println(httpResponseCode);
       }
-      // Free resources
       http.end();
     } else {
       Serial.println("WiFi Disconnected");

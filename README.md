@@ -1,6 +1,7 @@
 # Weather Warning
 
-[![Build Status](https://img.shields.io/badge/build-testing-brightgreen)](https://github.com/itsreverence/weather-watch/tree/main) [![Docker Image](https://img.shields.io/badge/docker--blue)](testing) [![License](https://img.shields.io/badge/License-AGPL-yellow.svg)](https://github.com/itsreverence/weather-watch/blob/main/LICENSE) 
+[![Build Status](https://img.shields.io/badge/build-testing-brightgreen)](https://github.com/itsreverence/weather-watch/tree/main)
+[![License](https://img.shields.io/badge/License-AGPL-yellow.svg)](https://github.com/itsreverence/weather-watch/blob/main/LICENSE) 
 
 A web application to display real-time temperature and humidity data from an ESP32 Wrover and DHT11 sensor.
 

@@ -5,7 +5,7 @@ body {
     font-family: 'Helvetica Neue', Arial, sans-serif;
     color: #ffffff; 
     /*background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(58,118,127,1) 50%, rgba(252,176,69,1) 100%);*/
-    background: #2a0d58;
+    background: #217cc2;
     line-height: 1.6;
     top: 50%;
     left: 50%;
@@ -35,7 +35,7 @@ h2 {
 .header {
     margin: 0 0 0 0;
     /*background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(94,94,78,1) 100%);*/
-    background: #2a0d58;
+    background: #217cc2;
     color: white;
     border-radius: 10px;
 }
@@ -86,7 +86,7 @@ h1 {
     width: 8.75rem;
     height: 4.375rem;
     margin-left: -4.375rem;
-    background: #2a0d58; /* White for contrast */
+    background: #217cc2; /* White for contrast */
     border-radius: 50% 50% 50% 50% / 100% 100% 0% 0%;
 }
 
@@ -129,7 +129,7 @@ h1 {
 }
 
 #tableReadings tr:nth-child(even){ 
-    background-color: #6227c2;
+    background-color: #17a6df;
 }
 
 #tableReadings tr:hover { 

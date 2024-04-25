@@ -163,7 +163,7 @@
 
     function setTemperature(curVal) {
         var minTemp = 32.0;
-        var maxTemp = 122.0;
+        var maxTemp = 100.0;
 
         var newVal = scaleValue(curVal, [minTemp, maxTemp], [0, 180]);
         $('.gauge--1 .semi-circle--mask').attr({

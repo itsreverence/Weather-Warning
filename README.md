@@ -1,23 +1,43 @@
 # Weather Warning
 
-![Weather Warning Application](https://github.com/itsreverence/Weather-Warning/blob/41a11db3189814f0c62d3d5b316a7274cb38f814/preview.png)
+[![Build Status](https://img.shields.io/badge/build-testing-brightgreen)](https://github.com/itsreverence/weather-watch/tree/main) [![Docker Image](https://img.shields.io/badge/docker--blue)](testing) [![License](https://img.shields.io/badge/License-AGPL-yellow.svg)](https://github.com/itsreverence/weather-watch/blob/main/LICENSE) 
 
-Weather Warning is a web application that retrieves real-time sensor data from an ESP32 Wrover and DHT11 sensor including temperature and humidity and displays it in an easily digestible manner.
+A web application to display real-time temperature and humidity data from an ESP32 Wrover and DHT11 sensor.
+
+![Weather Warning Application Preview](https://github.com/itsreverence/weather-watch/blob/main/preview.png)
+
+## Key Features
+
+* Real-time temperature and humidity monitoring
+* User-friendly web interface
+* Built using Docker for easy deployment
 
 ## Requirements
 
-- [ESP 32 Wrover Ultimate Starter Kit](https://www.amazon.com/FREENOVE-Ultimate-ESP32-WROVER-Included-Compatible/dp/B0CJJJ7BCY/ref=sr_1_3?sr=8-3)
-- Computer
+* **Hardware:**
+    * ESP 32 Wrover Ultimate Starter Kit: [https://www.amazon.com/FREENOVE-Ultimate-ESP32-WROVER-Included-Compatible/dp/B0CJJJ7BCY/ref=sr_1_3?sr=8-3](https://www.amazon.com/FREENOVE-Ultimate-ESP32-WROVER-Included-Compatible/dp/B0CJJJ7BCY/ref=sr_1_3?sr=8-3)
+    * DHT11 sensor 
+* **Software:**
+    * Docker Desktop: [https://www.docker.com/products/docker-desktop/](https://www.docker.com/products/docker-desktop/)
+    * Arduino IDE: [https://www.arduino.cc/en/software](https://www.arduino.cc/en/software)
 
 ## Getting Started
 
-1. Download the latest version of Docker Desktop from [here](https://www.docker.com/products/docker-desktop/) and follow the instructions in the installer.
-2. Clone the repo into your editor of choice using [this link](https://github.com/itsreverence/Weather-Warning.git).
-3. Configure all the variables for the network you will be using in the file `arduino_secrets.h.sample` and rename it to `arduino_secrets.h`.
-4. Open `Weather-Warning.ino` and put the last octet of your local IP address which can be found [like this](https://geekflare.com/find-ip-address-of-windows-linux-mac-and-website/) in the `lastOctet` variable.
-5. Make sure that you are connected to the same network on your host device that you will be connecting the ESP to.
-6. Navigate to a terminal inside the main folder of the repo and run: `docker-compose up --build` to build and start the application.
-7. Download the latest version of Arduino IDE from [here](https://www.arduino.cc/en/software), and connect your ESP32 via USB.
-8. Open Arduino IDE and go to File > Preferences, and add [this URL](https://dl.espressif.com/dl/package_esp32_index.json) to the Additional Board Managers URLs.
-9. Select the port your ESP32 is connected to and select the ESP32 Wrover board then flash the sketch onto the ESP32.
-10. Whenever you want to end the program you can just escape from the task using Control/Option and C key and run `docker-compose down` to stop the program and `docker-compose up` to start it again.
+**Important:** Your host device and the ESP32 need to be connected to the same network.
+
+1. **Install Docker Desktop:** Download and install from [https://www.docker.com/products/docker-desktop/](https://www.docker.com/products/docker-desktop/).
+2. **Clone the repository:** `git clone https://github.com/itsreverence/weather-watch.git`
+3. **Configure ESP32:**
+    * Edit `arduino_secrets.h.sample` with your network details and rename it to `arduino_secrets.h`.
+    * Update `weather-watch.ino` with your local IP address.
+4. **Build and run the Docker image (first time):** `docker-compose up --build`
+5. **Install Arduino IDE and ESP32 board support:**
+   * Instructions at [https://www.arduino.cc/en/software](https://www.arduino.cc/en/software) 
+   * Add ESP32 board manager URL: [https://dl.espressif.com/dl/package_esp32_index.json](https://dl.espressif.com/dl/package_esp32_index.json) 
+6. **Flash ESP32:** Connect the ESP32, select the correct port and board, and upload the `weather-watch.ino` sketch.
+7. **Access the web interface:** Open `http://localhost/esp-weather-station.php` in your browser. 
+
+## Stopping and Restarting 
+
+* **Stopping:** Press Ctrl/Option + C to terminate, or use `docker-compose down`.
+* **Restarting:** Run `docker-compose up` 

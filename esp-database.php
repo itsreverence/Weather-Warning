@@ -1,11 +1,7 @@
 <?php
   $servername = "db";
-
-  // REPLACE with your Database name
   $dbname = "php_docker";
-  // REPLACE with Database user
   $username = "php_docker";
-  // REPLACE with Database user password
   $password = "password";
 
   function insertReading($sensor, $location, $value1, $value2) {
@@ -18,7 +14,7 @@
       die("Connection failed: " . $conn->connect_error);
     }
 
-    $sql = "INSERT INTO SensorData (sensor, location, value1, value2, value3)
+    $sql = "INSERT INTO SensorData (sensor, location, value1, value2)
     VALUES ('" . $sensor . "', '" . $location . "', '" . $value1 . "', '" . $value2 . "')";
 
     if ($conn->query($sql) === TRUE) {

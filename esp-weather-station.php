@@ -42,7 +42,7 @@
 
     </head>
     <header class="header">
-        <h1>📊 ESP Weather Station</h1>
+        <h1>ESP Weather Station</h1>
         <form method="get">
             <input type="number" name="readingsCount" min="1" placeholder="Number of readings (<?php echo $readings_count; ?>)">
             <input type="submit" value="UPDATE">
@@ -162,8 +162,8 @@
     }
 
     function setTemperature(curVal) {
-        var minTemp = -5.0;
-        var maxTemp = 38.0;
+        var minTemp = 32.0;
+        var maxTemp = 122.0;
 
         var newVal = scaleValue(curVal, [minTemp, maxTemp], [0, 180]);
         $('.gauge--1 .semi-circle--mask').attr({
@@ -171,7 +171,7 @@
                 '-moz-transform: rotate(' + newVal + 'deg);' +
                 'transform: rotate(' + newVal + 'deg);'
         });
-        $("#temp").text(curVal + ' ºC');
+        $("#temp").text(curVal + ' ºF');
     }
 
     function setHumidity(curVal) {

@@ -5,7 +5,7 @@ body {
     font-family: 'Helvetica Neue', Arial, sans-serif;
     color: #ffffff; 
     /*background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(58,118,127,1) 50%, rgba(252,176,69,1) 100%);*/
-    background: linear-gradient(180deg, rgba(0,36,32,1) 0%, rgba(49,66,75,1) 35%, rgba(0,212,255,1) 100%);
+    background: #2a0d58;
     line-height: 1.6;
     top: 50%;
     left: 50%;
@@ -33,10 +33,9 @@ h2 {
 }
 
 .header {
-    padding: 1rem;
-    margin: 0 0 2rem 0;
+    margin: 0 0 0 0;
     /*background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(94,94,78,1) 100%);*/
-    background: linear-gradient(0deg, rgba(7,63,57,1) 0%, rgba(65,88,99,1) 35%, rgba(31,148,171,1) 100%);
+    background: #2a0d58;
     color: white;
     border-radius: 10px;
 }
@@ -87,7 +86,7 @@ h1 {
     width: 8.75rem;
     height: 4.375rem;
     margin-left: -4.375rem;
-    background: #ffffff; /* White for contrast */
+    background: #2a0d58; /* White for contrast */
     border-radius: 50% 50% 50% 50% / 100% 100% 0% 0%;
 }
 
@@ -130,30 +129,30 @@ h1 {
 }
 
 #tableReadings tr:nth-child(even){ 
-    background-color: #4e5d5e;
+    background-color: #6227c2;
 }
 
 #tableReadings tr:hover { 
-    background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(191,226,156,1) 100%);; 
+    background: #27b691;
 }
 
 #tableReadings th {
     padding: 10px;
-    background: linear-gradient(0deg, rgba(7,63,57,1) 0%, rgba(65,88,99,1) 35%, rgba(31,148,171,1) 100%);
+    background: #27b691;
     color: white;
 }
 
 
 input[type="submit"] {
-    background: rebeccapurple;
+    background: #27b691;
     width: 80px;
-    height: 40px;
+    height: 42.5px;
     border-radius: 10px;
-    color: yellow;
+    color: #ffffff;
 }
 
 input[type="number"] {
+    background: #ffffff;
     height: 40px;
     border-radius: 10px;
-    border: yellow;
 }

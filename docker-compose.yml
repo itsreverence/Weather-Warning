@@ -5,7 +5,7 @@ services:
     volumes:
       - "./:/var/www/html" # sync project dir with container web dir
     environment:
-      - TZ=America/Chicago
+      - TZ=${TIMEZONE}
     ports:
       - 80:80
       - 443:443
@@ -16,7 +16,7 @@ services:
       - MYSQL_USER=php_docker
       - MYSQL_PASSWORD=password
       - MYSQL_ALLOW_EMPTY_PASSWORD=1
-      - TZ=America/Chicago
+      - TZ=${TIMEZONE}
     volumes:
       - "./db:/docker-entrypoint-initdb.d" # sync persistent sql files with container
   phpmyadmin:

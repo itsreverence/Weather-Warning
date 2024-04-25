@@ -5,7 +5,7 @@
 #include "arduino_secrets.h"
 
 // Define variables for network
-String lastOctet = "111";
+String lastOctet = SECRET_LASTOCTET;
 const char* ssid = SECRET_SSID;
 const char* password = SECRET_PASSWORD;
 

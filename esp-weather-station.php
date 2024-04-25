@@ -42,7 +42,7 @@
 
     </head>
     <header class="header">
-        <h1>ESP Weather Station</h1>
+        <h1>Weather Watch</h1>
         <form method="get">
             <input type="number" name="readingsCount" min="1" placeholder="Number of readings (<?php echo $readings_count; ?>)">
             <input type="submit" value="UPDATE">

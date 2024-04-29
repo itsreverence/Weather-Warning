@@ -10,9 +10,9 @@ if ($result) {
                 <td>' . $row["id"] . '</td>
                 <td>' . $row["sensor"] . '</td>
                 <td>' . $row["location"] . '</td>
-                <td>' . $row["value1"] . '</td>
-                <td>' . $row["value2"] . '</td>
-                <td>' . $row["reading_time"] . '</td>
+                <td>' . $row["value1"] . ' °F</td>
+                <td>' . $row["value2"] . ' %</td>
+                <td>' . date("F jS, Y g:i:s A", strtotime($row["reading_time"])) . '</td>
               </tr>';
     }
     $result->free();

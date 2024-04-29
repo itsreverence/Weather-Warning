@@ -53,7 +53,6 @@ void loop() {
       WiFiClient client;
       HTTPClient http;
 
-
 flag:
       // Retrieve temperature and humidity values from sensor
       TempAndHumidity newValues = dht.getTempAndHumidity();

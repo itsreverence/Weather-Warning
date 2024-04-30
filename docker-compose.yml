@@ -6,6 +6,7 @@ services:
       - "./:/var/www/html" # sync project dir with container web dir
     environment:
       - TZ=${TIMEZONE}
+      - APIKEY=${KEY}
       - MYSQL_SERVER=${SERVERNAME}
       - MYSQL_DATABASE=${DATABASE}
       - MYSQL_USER=${USER}

@@ -4,14 +4,9 @@
 #include <IPAddress.h>
 #include "arduino_secrets.h"
 
-// Define variables for network
-String lastOctet = SECRET_LASTOCTET;
-const char* ssid = SECRET_SSID;
-const char* password = SECRET_PASSWORD;
-
 // Define variables for database
 String serverName;
-String apiKeyValue = "mF8d0cge2";
+String apiKeyValue = SECRET_APIKEY;
 String sensorName = "DHT11";
 String sensorLocation = "Classroom";
 
@@ -20,6 +15,11 @@ DHTesp dht;
 int dhtPin = 13;
 unsigned long lastTime = 0;
 unsigned long timerDelay = 30000;
+
+// Define variables for network
+String lastOctet = SECRET_LASTOCTET;
+const char* ssid = SECRET_SSID;
+const char* password = SECRET_PASSWORD;
 
 // Connect to network
 void setup() {

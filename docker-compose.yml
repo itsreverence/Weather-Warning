@@ -3,7 +3,7 @@ services:
     build: .
     image: php:apache
     volumes:
-      - "./:/var/www/html" # sync project dir with container web dir
+      - "./:/var/www/html"
     environment:
       - TZ=${TIMEZONE}
       - APIKEY=${KEY}
@@ -22,8 +22,6 @@ services:
       - MYSQL_USER=${USER}
       - MYSQL_PASSWORD=${PASSWORD}
       - MYSQL_ALLOW_EMPTY_PASSWORD=${ALLOWEMPTYPASSWORD}
-    volumes:
-      - "./db:/docker-entrypoint-initdb.d" # sync persistent sql files with container
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     ports:

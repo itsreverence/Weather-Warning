@@ -45,7 +45,7 @@
         </form>
     </header>
 <body background="#F5EEE6">
-    <p>Last Reading: <?php echo $last_reading_time; ?></p>
+    <p id="lastReadingTime" >Last Reading: <?php echo $last_reading_time; ?></p>
     <section class="content">
 	    <div class="box gauge--1">
 	    <h3>TEMPERATURE</h3>
@@ -56,12 +56,12 @@
 		    <p style="font-size: 30px;" id="temp">--</p>
 		    <table cellspacing="5" cellpadding="5">
 		        <tr>
-		            <th colspan="3">Temperature <?php echo $readings_count; ?> readings</th>
+		            <th colspan="3">Latest <?php echo $readings_count; ?> readings</th>
 	            </tr>
 		        <tr>
 		            <td>Min</td>
                     <td>Max</td>
-                    <td>Average</td>
+                    <td>Avg</td>
                 </tr>
                 <tr>
                     <td id="min_temp">--</td>
@@ -79,12 +79,12 @@
             <p style="font-size: 30px;" id="humi">--</p>
             <table cellspacing="5" cellpadding="5">
                 <tr>
-                    <th colspan="3">Humidity <?php echo $readings_count; ?> readings</th>
+                    <th colspan="3">Latest <?php echo $readings_count; ?> readings</th>
                 </tr>
                 <tr>
                     <td>Min</td>
                     <td>Max</td>
-                    <td>Average</td>
+                    <td>Avg</td>
                 </tr>
                 <tr>
                     <td id="min_humi">--</td>
@@ -142,12 +142,14 @@
                 } else {
                     var temp = data.temperature;
                     var humi = data.humidity;
+                    var readingTime = data.readingTime; // Get the reading time from the response
 
                     console.log("Temperature:", temp); // Debugging line
                     console.log("Humidity:", humi); // Debugging line
 
                     setTemperature(temp);
                     setHumidity(humi);
+                    setLastReadingTime(readingTime);
                 }
             },
             error: function(xhr, status, error) {
@@ -183,6 +185,10 @@
         $("#humi").text(curVal + ' %');
     }
 
+    function setLastReadingTime(readingTime) {
+    $("#lastReadingTime").text("Last Reading: " + readingTime);
+    }
+
     function scaleValue(value, from, to) {
         var scale = (to[1] - to[0]) / (from[1] - from[0]);
         var capped = Math.min(from[1], Math.max(from[0], value)) - from[0];
@@ -194,9 +200,9 @@
             url: "getReadingsStats.php?readingsCount=<?php echo $readings_count; ?>",
             dataType: "json",
             success: function(data) {
-                $("#min_temp").text(data.temperature.min + " °C");
-                $("#max_temp").text(data.temperature.max + " °C");
-                $("#avg_temp").text(data.temperature.avg + " °C");
+                $("#min_temp").text(data.temperature.min + " ºF");
+                $("#max_temp").text(data.temperature.max + " ºF");
+                $("#avg_temp").text(data.temperature.avg + " ºF");
                 $("#min_humi").text(data.humidity.min + " %");
                 $("#max_humi").text(data.humidity.max + " %");
                 $("#avg_humi").text(data.humidity.avg + " %");

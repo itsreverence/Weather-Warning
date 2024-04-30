@@ -6,10 +6,12 @@ $last_reading = getLastReadings();
 if ($last_reading) {
     $last_reading_temp = $last_reading["value1"];
     $last_reading_humi = $last_reading["value2"];
+    $reading_time = date("F jS, Y g:i:s A", strtotime($last_reading["reading_time"]));
 
     $readings = array(
         'temperature' => $last_reading_temp,
-        'humidity' => $last_reading_humi
+        'humidity' => $last_reading_humi,
+        'readingTime' => $reading_time
     );
 
     header('Content-Type: application/json');

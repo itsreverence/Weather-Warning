@@ -1,11 +1,16 @@
-# Weather Warning
+<p align="center">
+  <img src="https://github.com/itsreverence/weather-watch/blob/main/preview.png" alt="Weather Watch Website Preview">
+</p>
+<h1 align="center">
+  <b>Weather Watch</b>
+</h1>
+
+<b>A web application that receives real-time weather data from a DHT11 sensor on-board an ESP32 Wrover.</b>
 
 [![Build Status](https://img.shields.io/badge/build-testing-brightgreen)](https://github.com/itsreverence/weather-watch/tree/main)
 [![License](https://img.shields.io/badge/License-AGPL-yellow.svg)](https://github.com/itsreverence/weather-watch/blob/main/LICENSE) 
 
-A web application to display real-time temperature and humidity data from an ESP32 Wrover and DHT11 sensor.
-
-![Weather Warning Application Preview](https://github.com/itsreverence/weather-watch/blob/main/preview.png)
+---
 
 ## Key Features
 
@@ -21,23 +26,70 @@ A web application to display real-time temperature and humidity data from an ESP
     * [Docker Desktop](https://www.docker.com/products/docker-desktop/)
     * [Arduino IDE](https://www.arduino.cc/en/software)
 
+---
+
 ## Getting Started
+1. Complete the hardware setup which can be found [here](#Hardware-Setup) if you have not already.
+2. Complete the software setup which can be found [here](#Software-Setup) if you have not already.
+3. Connect your host pc to the same network your ESP32 will connect to.
+4. Build the software if you have not before or just start it if you have, the corresponding commands to do so can be found [here](#Operating-Software).
+5. Start the ESP32 by plugging it into your computer or providing another power source to run it.
+6. Access the main webpage of the software [here](http://localhost/esp-weather-station.php).
 
-**Important:** Your host device and the ESP32 need to be connected to the same network.
+---
 
-1. **Install Docker Desktop:** Download Docker Desktop from [here](https://www.docker.com/products/docker-desktop/) then install and start it.
-2. **Clone the repository:** `git clone https://github.com/itsreverence/weather-watch.git`
-3. **Configure ESP32:**
-    * Edit `arduino_secrets.h.sample` with your network details and rename it to `arduino_secrets.h`.
-    * Update the `lastOctet` variable in `weather-watch.ino` with the last octet of your local IP address.
-4. **Build and run the Docker image (first time):** `docker-compose up --build`
-5. **Install Arduino IDE and ESP32 board support:**
-   * Download Arduino IDE from here [here](https://www.arduino.cc/en/software) 
-   * Add this link [here](https://dl.espressif.com/dl/package_esp32_index.json) to your Additional Board Manager URL's in File > Preferences
-6. **Flash ESP32:** Connect the ESP32, select the correct port and board, and upload the `weather-watch.ino` sketch.
-7. **Access the web interface:** Open the app [here](http://localhost/esp-weather-station.php) in your browser. 
+## Hardware Setup
+* **Setup ESP32:**
+     * Arrange 4 M/M Jumpers, DHT11 Sensor, and 10 kΩ Transistor as displayed in the photo below.
+![Hardware Diagram](https://github.com/itsreverence/weather-watch/blob/main/hardware.png)
+     * Ensure that your all your connections are properly made as showcased in the photo below.
+![Hardware Schematic](https://github.com/itsreverence/weather-watch/blob/main/schematic.png)
 
-## Stopping and Restarting 
+## Software Setup
+1. **Prepare Docker Desktop:** Download Docker Desktop from [here](https://www.docker.com/products/docker-desktop/) then install and start it.
+2. **Prepare Arduino IDE:**
+      * Download Arduino IDE from [here](https://www.arduino.cc/en/software) then install and start it.
+      * Add this [link](https://dl.espressif.com/dl/package_esp32_index.json) to the Addition Board Manager URL's in File > Preferences.
+3. **Clone the repository:** Run `git clone https://github.com/itsreverence/weather-watch.git` and open the directory in your IDE of choice.
+4. **Prepare ESP32:**
+    * Configure the following variables:
+      * Set `SECRET_SSID` in `arduino_secrets.h.sample` to the name of the network your ESP32 and host computer will connect to.
+      * Set `SECRET_PASSWORD` in `arduino_secrets.h.sample` to the password of the network your ESP32 and host computer will connect to.
+      * Set `SECRET_LASTOCTET` in `arduino_secrets.h.sample` to the last octet of the local IPv4 address of your host computer on the chosen network.
+      * Set `SECRET_APIKEY` in `arduino_secrets.h.sample` to the API key that is set in the .env file of the program.
+      * Set `sensorLocation` in `weather-watch.ino` to the location you want displayed that the sensor will be collecting data from.
+      * Set `timerDelay` in `weather-watch.ino` to the delay you want between each time data is sent in milliseconds.
+    * Rename the `arduino_secrets.h.sample` file to `arduino_secrets.h`.
+    * Plug the ESP32 into your computer, open Arduino IDE, select the port that your ESP32 is on, select ESP32 Wrover Module as the board, and upload `weather-watch.ino` to the ESP32.
+5. **Prepare Docker**
+   * Configure the following variables:
+      * Set `TIMEZONE` in `.env.sample` to the timezone that you want timestamps stored in.
+      * Set `KEY` in `.env.sample` to the API key that you want to be checked with data posts that are received.
+      * Set `SERVERNAME` in `.env.sample` to the name that you want the database server to be called.
+      * Set `DATABASE` in `.env.sample` to the the name that you want the database to be called.
+      * Set `USER` in `.env.sample` to the username you want for the login to the database.
+      * Set `PASSWORD` in `.env.sample` to the password you want for the login to the database.
+      * Set `ALLOWEMPTYPASSWORD` in `.env.sample` to 1 to allow empty passwords or 0 to not allow them.
+   * Rename the `.env.sample` file to `.env`.
 
-* **Stopping:** Press Ctrl/Option + C to terminate, or use `docker-compose down`.
-* **Restarting:** Run `docker-compose up` 
+---
+
+## Operating Software
+* **Building:** Run `docker-compose up --build`
+* **Stopping:** Run `docker-compose down`
+* **Starting:** Run `docker-compose up`
+* Access the main webpage [here](http://localhost/esp-weather-station.php)
+* Access the database [here](http://localhost:8001)
+
+---
+
+# License
+[![License](https://www.gnu.org/graphics/agplv3-155x51.png)](LICENSE)   
+Ultroid is licensed under [GNU Affero General Public License](https://www.gnu.org/licenses/agpl-3.0.en.html) v3 or later.
+
+---
+
+# Credit
+* [Rui Santos](https://randomnerdtutorials.com/about) for the [original program](https://github.com/RuiSantosdotme/Cloud-Weather-Station-ESP32-ESP8266).
+
+> Made by [@itsreverence](https://github.com/itsreverence), [@carlosgothub](https://github.com/carlosgothub), [@Comiserif](https://github.com/Comiserif), and [@limon-nawaj](https://github.com/limon-nawaj)    

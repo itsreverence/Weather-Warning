@@ -61,7 +61,7 @@
 		    <p style="font-size: 30px;" id="temp">--</p>
 		    <table cellspacing="5" cellpadding="5">
 		        <tr>
-		            <th colspan="3">Latest <?php echo $readings_count; ?> readings</th>
+		            <th colspan="3">Latest <?php echo $readings_count; ?> Readings</th>
 	            </tr>
 		        <tr>
 		            <td>Min</td>
@@ -84,7 +84,7 @@
             <p style="font-size: 30px;" id="humi">--</p>
             <table cellspacing="5" cellpadding="5">
                 <tr>
-                    <th colspan="3">Latest <?php echo $readings_count; ?> readings</th>
+                    <th colspan="3">Latest <?php echo $readings_count; ?> Readings</th>
                 </tr>
                 <tr>
                     <td>Min</td>

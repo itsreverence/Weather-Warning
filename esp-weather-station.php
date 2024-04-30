@@ -13,10 +13,15 @@
     }
 
     $last_reading = getLastReadings();
-    $last_reading_temp = $last_reading["value1"];
-    $last_reading_humi = $last_reading["value2"];
-    $last_reading_time = $last_reading["reading_time"];
-    $last_reading_time = date("F jS, Y g:i:s A", strtotime($last_reading_time));
+    if ($last_reading) {
+        $last_reading_temp = $last_reading["value1"];
+        $last_reading_humi = $last_reading["value2"];
+        $last_reading_time = date("F jS, Y g:i:s A", strtotime($last_reading["reading_time"]));
+    } else {
+        $last_reading_temp = "--";
+        $last_reading_humi = "--";
+        $last_reading_time = "No readings available";
+    }
 
     $min_temp = minReading($readings_count, 'value1');
     $max_temp = maxReading($readings_count, 'value1');
@@ -45,7 +50,7 @@
         </form>
     </header>
 <body background="#F5EEE6">
-    <p id="lastReadingTime" >Last Reading: <?php echo $last_reading_time; ?></p>
+    <p id="lastReadingTime">Last Reading: <?php echo $last_reading_time; ?></p>
     <section class="content">
 	    <div class="box gauge--1">
 	    <h3>TEMPERATURE</h3>

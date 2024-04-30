@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/itsreverence/weather-watch/blob/main/assets/preview.png" alt="Weather Watch Website Preview">
+  <img src="https://github.com/itsreverence/weather-watch/blob/dev/assets/preview.png" alt="Weather Watch Website Preview">
 </p>
 <h1 align="center">
   <b>Weather Watch</b>
@@ -41,9 +41,9 @@
 ## Hardware Setup
 * **Setup ESP32:**
      * Arrange 4 M/M Jumpers, DHT11 Sensor, and 10 kΩ Transistor as displayed in the photo below.
-![Hardware Diagram](https://github.com/itsreverence/weather-watch/blob/main/assets/hardware.png)
+![Hardware Diagram](https://github.com/itsreverence/weather-watch/blob/dev/assets/hardware.png)
      * Ensure that your all your connections are properly made as showcased in the photo below.
-![Hardware Schematic](https://github.com/itsreverence/weather-watch/blob/main/assets/schematic.png)
+![Hardware Schematic](https://github.com/itsreverence/weather-watch/blob/dev/assets/schematic.png)
 
 ## Software Setup
 1. **Prepare Docker Desktop:** Download Docker Desktop from [here](https://www.docker.com/products/docker-desktop/) then install and start it.

@@ -24,7 +24,7 @@ else
 
         # Create the new table name
         if [ "$start_time" = "$end_time" ]; then
-          new_table_name="SensorData_${start_time_formatted}"
+           new_table_name="SensorData_${start_time_formatted}_to_${start_time_formatted}"
         else
           end_time_formatted=$(date -d "$end_time" +"%Y%m%d_%H%M%S")
           new_table_name="SensorData_${start_time_formatted}_to_${end_time_formatted}"

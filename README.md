@@ -88,6 +88,16 @@
 
 ---
 
+## Troubleshooting
+* Invalid End of Line Sequence / Line Seperator:
+  * Error:
+    * `manage_db-1   | /manage_db.sh: line 2: $'\r': command not found`
+    * `manage_db-1   | /manage_db.sh: line 52: syntax error: unexpected end of file`
+  * Solution:
+    * Open `manage_db.sh` in your text editor or IDE of choice in make sure the line seperator is set to LF.
+
+---
+
 # License
 [![License](https://www.gnu.org/graphics/agplv3-155x51.png)](LICENSE)   
 Ultroid is licensed under [GNU Affero General Public License](https://www.gnu.org/licenses/agpl-3.0.en.html) v3 or later.

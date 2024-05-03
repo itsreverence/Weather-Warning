@@ -1,7 +1,7 @@
 services:
   www:
     build: 
-      context: ./website/
+      context: ./web/
       dockerfile: www.Dockerfile
     image: php:apache
     volumes:
@@ -13,9 +13,9 @@ services:
       - MYSQL_DATABASE=${DATABASE}
       - MYSQL_USER=${USER}
       - MYSQL_PASSWORD=${PASSWORD}
+      - MYSQL_TABLE=${TABLE}
     ports:
       - 80:80
-      - 443:443
   db:
     image: mysql:latest
     environment:
@@ -24,6 +24,7 @@ services:
       - MYSQL_USER=${USER}
       - MYSQL_PASSWORD=${PASSWORD}
       - MYSQL_ALLOW_EMPTY_PASSWORD=${ALLOWEMPTYPASSWORD}
+      - MYSQL_TABLE=${TABLE}
     volumes:
       - "./db/init.sql:/docker-entrypoint-initdb.d/init.sql"
       - "/opt/mysql_data:/var/lib/mysql"
@@ -35,26 +36,27 @@ services:
     volumes:
     - "./db/phpmyadmin-servername.conf:/etc/apache2/conf-available/phpmyadmin-servername.conf"
     ports:
-      - 8001:80
+      - 8080:80
     environment:
-      - PMA_HOST=db
-      - PMA_PORT=3306
       - TZ=${TIMEZONE}
+      - PMA_HOST=${SERVERNAME}
+      - PMA_PORT=3306
   manage_db:
     image: mysql:latest
     volumes:
       - "./db/manage_db.sh:/manage_db.sh"
       - "./db/init.sql:/docker-entrypoint-initdb.d/init.sql"
     environment:
+      - TZ=${TIMEZONE}
       - CLEAR_DB=${CLEAR_DB}
       - MOVE_DB=${MOVE_DB}
-      - DELETE_OLD_TABLES=${DELETE_OLD_TABLES}
       - MYSQL_DATABASE=${DATABASE}
       - MYSQL_USER=${USER}
       - MYSQL_PASSWORD=${PASSWORD}
+      - MYSQL_TABLE=${TABLE}
     command: ["sh", "-c", "while ! mysqladmin ping -h db --silent; do sleep 1; done; bash /manage_db.sh"]
     depends_on:
       - db
 volumes:
   mysql_data:
-    driver: local
+    driver: local 

@@ -2,7 +2,7 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
--- Create the SensorData table if it doesn't exist
+-- Create the table if it doesn't exist
 CREATE TABLE IF NOT EXISTS `SensorData` (
   `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
   `sensor` varchar(30) NOT NULL,

@@ -3,17 +3,26 @@ body {
     margin: auto;
     text-align: center;
     font-family: 'Helvetica Neue', Arial, sans-serif;
-    color: #ffffff; 
-    /*background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(58,118,127,1) 50%, rgba(252,176,69,1) 100%);*/
+    color: #ffffff;
     background: #217cc2;
     line-height: 1.6;
     top: 50%;
     left: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-@media screen and (max-width: 800px) {
+@media (max-width: 767px) {
     body {
-        width: 95%;
+        width: 100%;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    .content {
+        flex-direction: column;
+        align-items: center;
     }
 }
 
@@ -27,17 +36,19 @@ div {
     margin-right: auto;
 }
 
-h2 { 
-    font-size: 2.5rem; 
+h2 {
+    font-size: 2.5rem;
     color: #ffffff;
 }
 
 .header {
-    margin: 0 0 0 0;
-    /*background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(94,94,78,1) 100%);*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     background: #217cc2;
     color: white;
     border-radius: 10px;
+    padding: 10px;
 }
 
 h1 {
@@ -45,17 +56,11 @@ h1 {
     font-family: 'Helvetica Neue', Arial, sans-serif;
     text-align: center;
     text-transform: uppercase;
-    color: #ffffff; /* White text for visibility */
+    color: #ffffff;
 }
 
 .content {
     display: flex;
-}
-
-@media screen and (max-width: 500px) {
-    .content {
-        flex-direction: column;
-    }
 }
 
 .mask {
@@ -86,7 +91,7 @@ h1 {
     width: 8.75rem;
     height: 4.375rem;
     margin-left: -4.375rem;
-    background: #217cc2; /* White for contrast */
+    background: #217cc2;
     border-radius: 50% 50% 50% 50% / 100% 100% 0% 0%;
 }
 
@@ -113,26 +118,33 @@ h1 {
     width: 12.625rem;
     height: 6.375rem;
     margin: -1px 0 0 -1px;
-    background: #f2f2f2; /* Light grey for contrast */
+    background: #f2f2f2;
     border-radius: 50% 50% 50% 50% / 100% 100% 0% 0%;
 }
 
-.gauge--2 .semi-circle { background: #2196f3; /* Consistent blue for specific gauge */ }
+.gauge--2 .semi-circle {
+    background: #2196f3;
+}
 
-.gauge--2 .semi-circle--mask { transform: rotate(20deg) translate3d(0, 0, 0); }
+.gauge--2 .semi-circle--mask {
+    transform: rotate(20deg) translate3d(0, 0, 0);
+}
 
-#tableReadings { border-collapse: collapse; }
+#tableReadings {
+    border-collapse: collapse;
+}
 
-#tableReadings td, #tableReadings th {
+#tableReadings td,
+#tableReadings th {
     border: 1px solid #ddd;
     padding: 10px;
 }
 
-#tableReadings tr:nth-child(even){ 
+#tableReadings tr:nth-child(even) {
     background-color: #17a6df;
 }
 
-#tableReadings tr:hover { 
+#tableReadings tr:hover {
     background: #27b691;
 }
 
@@ -142,17 +154,63 @@ h1 {
     color: white;
 }
 
-
-input[type="submit"] {
-    background: #27b691;
-    width: 80px;
-    height: 42.5px;
-    border-radius: 10px;
-    color: #ffffff;
+.readings-input {
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    gap: 5px;
 }
 
-input[type="number"] {
-    background: #ffffff;
-    height: 40px;
+.readings-input {
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    gap: 5px;
+}
+
+.readings-input input[type="number"] {
+    margin-right: 5px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 185px;
+    text-align: center;
+}
+
+.readings-input input[type="submit"] {
+    padding: 5px 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 85px
+}
+
+.table-select {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.table-select label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.table-select select {
+    padding: 5px;
+    border: 1px solid #ccc;
     border-radius: 10px;
+    width: 350px;
+    text-align: center;
+}
+
+#lastReadingTime {
+    margin-top: 5px;
+    color: #fff;
+    font-size: 1rem;
 }

@@ -2,14 +2,15 @@
 include_once('esp-database.php');
 
 $readings_count = isset($_GET["readingsCount"]) ? intval($_GET["readingsCount"]) : 20;
+$selected_table = isset($_GET["selectedTable"]) ? $_GET["selectedTable"] : getAvailableTables()[0];
 
-$min_temp = minReading($readings_count, 'value1');
-$max_temp = maxReading($readings_count, 'value1');
-$avg_temp = avgReading($readings_count, 'value1');
+$min_temp = minReading($readings_count, 'value1', $selected_table);
+$max_temp = maxReading($readings_count, 'value1', $selected_table);
+$avg_temp = avgReading($readings_count, 'value1', $selected_table);
 
-$min_humi = minReading($readings_count, 'value2');
-$max_humi = maxReading($readings_count, 'value2');
-$avg_humi = avgReading($readings_count, 'value2');
+$min_humi = minReading($readings_count, 'value2', $selected_table);
+$max_humi = maxReading($readings_count, 'value2', $selected_table);
+$avg_humi = avgReading($readings_count, 'value2', $selected_table);
 
 $stats = array(
     'temperature' => array(

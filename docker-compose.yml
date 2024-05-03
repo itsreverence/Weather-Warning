@@ -48,7 +48,6 @@ services:
     environment:
       - CLEAR_DB=${CLEAR_DB}
       - MOVE_DB=${MOVE_DB}
-      - DELETE_OLD_TABLES=${DELETE_OLD_TABLES}
       - MYSQL_DATABASE=${DATABASE}
       - MYSQL_USER=${USER}
       - MYSQL_PASSWORD=${PASSWORD}

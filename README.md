@@ -5,7 +5,7 @@
   <b>Weather Watch</b>
 </h1>
 
-<b>A web application that receives real-time weather data from a DHT11 sensor on-board an ESP32 Wrover.</b>
+<b>A web application that allows for analyzation of weather data from the past and real-time from a DHT11 sensor on-board an ESP32 Wrover.</b>
 
 [![Build Status](https://img.shields.io/badge/build-testing-brightgreen)](https://github.com/itsreverence/weather-watch/tree/main)
 [![License](https://img.shields.io/badge/License-AGPL-yellow.svg)](https://github.com/itsreverence/weather-watch/blob/main/LICENSE) 
@@ -15,13 +15,15 @@
 ## Key Features
 
 * Real-time temperature and humidity monitoring
+* Review history of weather data
 * User-friendly web interface
 * Built using Docker for easy deployment
 
 ## Requirements
 
 * **Hardware:**
-    * [ESP 32 Wrover Ultimate Starter Kit](https://www.amazon.com/FREENOVE-Ultimate-ESP32-WROVER-Included-Compatible/dp/B0CJJJ7BCY/ref=sr_1_3?sr=8-3) 
+    * [ESP 32 Wrover Ultimate Starter Kit](https://www.amazon.com/FREENOVE-Ultimate-ESP32-WROVER-Included-Compatible/dp/B0CJJJ7BCY/ref=sr_1_3?sr=8-3)
+    * Computer
 * **Software:**
     * [Docker Desktop](https://www.docker.com/products/docker-desktop/)
     * [Arduino IDE](https://www.arduino.cc/en/software)
@@ -57,6 +59,7 @@
       * Set `SECRET_PASSWORD` in `arduino_secrets.h.sample` to the password of the network your ESP32 and host computer will connect to.
       * Set `SECRET_LASTOCTET` in `arduino_secrets.h.sample` to the last octet of the local IPv4 address of your host computer on the chosen network.
       * Set `SECRET_APIKEY` in `arduino_secrets.h.sample` to the API key that is set in the .env file of the program.
+      * Set `sensorName` in `weather-watch.ino` to the name you want displayed for the sensor that is collecting the data.
       * Set `sensorLocation` in `weather-watch.ino` to the location you want displayed that the sensor will be collecting data from.
       * Set `timerDelay` in `weather-watch.ino` to the delay you want between each time data is sent in milliseconds.
     * Rename the `arduino_secrets.h.sample` file to `arduino_secrets.h`.
@@ -70,7 +73,9 @@
       * Set `USER` in `.env.sample` to the username you want for the login to the database.
       * Set `PASSWORD` in `.env.sample` to the password you want for the login to the database.
       * Set `ALLOWEMPTYPASSWORD` in `.env.sample` to 1 to allow empty passwords or 0 to not allow them.
-   * Rename the `.env.sample` file to `.env`.
+      * Set `CLEAR_DB` in `.env.sample` to true to clear all the tables in the database on startup or false to leave them.
+      * Set `MOVE_DB` in `.env.sample` to true to move all the data from the main table to tables named after the data intervals on startup or false to leave the data.
+      * Rename the `.env.sample` file to `.env`.
 
 ---
 
